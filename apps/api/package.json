@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "npm run build:ts && tsc -p test/tsconfig.json && c8 tap --ts \"test/**/*.test.ts\"",
-    "start": "fastify start app.js",
+    "start": "npx prisma generate && fastify start app.js",
     "build": "tsc",
     "build:ts": "tsc",
     "watch:ts": "tsc -w",
