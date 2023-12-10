@@ -1,19 +1,16 @@
-# Caption 🌋
+# Shotty
 
-Caption is a playful tool designed to spark creativity in your social media posts! Using an image as a starting point, this project leverages the magic of AI to generate unique and engaging captions. Perfect for when you're seeking that extra bit of inspiration or just want to add a twist to your usual posts.
-
-
-Remember, "Caption" is all about having a good time. Whether the results are hilariously offbeat or surprisingly apt, take it all in stride and enjoy the process.
-
+Shotty let you generate video from given URL or text. It uses OpenAI, Fireworks, Whisper and Elevenlabs API to generate the video.
 
 ## Getting Started 🚀
 
 
 ### Prerequisites 📋
 
-- Node.js
-- pnpm
+- docker
 - fireworks api key
+- elevenlabs api key
+- openai api key
 
 
 ### Installation 🔧
@@ -21,34 +18,12 @@ Remember, "Caption" is all about having a good time. Whether the results are hil
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/n4ze3m/caption.git
+   git clone https://github.com/n4ze3m/shotty-fun.git
    ```
 
-2. Install pnpm packages
-   ```sh
-    pnpm install
-    ```
-
-3. Create a .env file in the root directory and add the following
-
-    ```sh
-    FIREWORKS_API_KEY=YOUR_API_KEY
-    ```
+3. Edit `.env.example` file and rename it to `.env` and add your api keys
 
 4. Run the project
     ```sh
-    pnpm run dev
+    docker compose up
     ```
-
-## Usage 📖
-
-1. Upload an image
-
-2. Select the platform you want to generate a caption for (Instagram, Twitter, Facebook)
-
-3. Click on the "Generate" button
-
-
-## License 📄
-
-Distributed under the MIT License. See `LICENSE` for more information.

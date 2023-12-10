@@ -69,7 +69,7 @@ function App() {
               mx="md"
               aria-label="Github"
               component="a"
-              href="https://github.com/n4ze3m/shotty"
+              href="https://github.com/n4ze3m/shotty-fun"
               target="_blank"
             >
               <IconBrandGithub size={24} />
