@@ -1,9 +1,6 @@
-// import { ChatAnthropic } from "langchain/chat_models/anthropic";
 import { Fireworks } from "langchain/llms/fireworks";
 import { OpenAI } from "langchain/llms/openai";
-// import { OpenAI } from "langchain/llms/openai";
 import { PromptTemplate } from "langchain/prompts";
-
 
 const PROMPT = `Your task is to summarize the following context from a website as a {platform} like format. Use the following rules:
 
@@ -38,13 +35,13 @@ Search Query:
 
 const openai = new OpenAI(
   {
-    modelName: "gpt-3.5-turbo-1106",
+    modelName: process.env.OPENAI_MODEL_NAME || "gpt-3.5-turbo-1106",
   },
   {
-    basePath: "https://openrouter.ai/api/v1",
+    basePath: process.env.OPENAI_BASE_PATH,
     baseOptions: {
       headers: {
-        "HTTP-Referer": "https://n4ze3m.com/",
+        "HTTP-Referer": "https://shotty.fun",
         "X-Title": "n4ze3m",
       },
     },
@@ -52,10 +49,15 @@ const openai = new OpenAI(
 );
 
 const fireworks = new Fireworks({
-  modelName: "accounts/fireworks/models/mistral-7b-instruct-4k",
+  modelName:
+    process.env.FIREWORKS_MODEL_NAME ||
+    "accounts/fireworks/models/mistral-7b-instruct-4k",
 });
 
-export const generateVideoScript = async (context: string, platform: string) => {
+export const generateVideoScript = async (
+  context: string,
+  platform: string
+) => {
   const prompt = PromptTemplate.fromTemplate(PROMPT);
   let formattedPrompt = await prompt.format({
     context,
