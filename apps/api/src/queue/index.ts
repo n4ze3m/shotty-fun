@@ -65,10 +65,16 @@ export default async function queueHandler(job: Job) {
     });
     await renderMedia({
       composition,
+      onProgress: ({ progress }) => {
+        console.log(`Rendering is ${progress * 100}% complete`);
+      },
       serveUrl: bundleLocation,
       codec: "h264",
       outputLocation: `out/${process.id}.mp4`,
       inputProps,
+      chromiumOptions: {
+        enableMultiProcessOnLinux: true,
+      },
     });
 
     await prisma.video.update({
@@ -84,5 +90,14 @@ export default async function queueHandler(job: Job) {
     console.log("Done");
   } catch (e) {
     console.log(e);
+
+    await prisma.video.update({
+      where: {
+        id: job.data.id,
+      },
+      data: {
+        status: "error",
+      },
+    });
   }
 }

@@ -7,10 +7,11 @@ import { VideoProcessing } from "./components/VideoProcessing";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { VideoDone } from "./components/VideoDone";
+import { VideoError } from "./components/VideoError";
 
 function App() {
   const [appState, setAppState] = React.useState<
-    "form" | "loading" | "processing" | "done" | "pending"
+    "form" | "loading" | "processing" | "done" | "pending" | "error"
   >("form");
   const [videoId, setVideId] = useLocalStorage({
     key: "videoId",
@@ -92,6 +93,14 @@ function App() {
           )}
           {appState === "done" && videoInfoStatus === "error" && (
             <div>There was an error fetching your video. Please try again.</div>
+          )}
+
+          {appState === "error" && (
+            <VideoError
+              setAppState={setAppState}
+              setVideId={setVideId}
+              setVideoStatus={setVideoStatus}
+            />
           )}
         </div>
       </AppShell.Main>
