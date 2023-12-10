@@ -9,6 +9,7 @@ services:
       - .env
     depends_on:
       - cache
+      - whisper
     volumes:
       - .out:/app/out
 
@@ -19,6 +20,15 @@ services:
       - '6379:6379'
     volumes:
       - cache:/data
+
+  whisper:
+    image: n4z3m/whisper-fastai-timestamp:latest
+    restart: always
+    ports:
+      - '6391:80'
+    env_file:
+      - .env
+
 volumes:
   cache:
     driver: local
