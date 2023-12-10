@@ -1,4 +1,4 @@
-import { AppShell, Text, Group, Center } from "@mantine/core";
+import { AppShell, Text, Group, Center, ActionIcon } from "@mantine/core";
 import classes from "./App.module.css";
 import React from "react";
 import { useLocalStorage } from "@mantine/hooks";
@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { VideoDone } from "./components/VideoDone";
 import { VideoError } from "./components/VideoError";
+import { IconBrandGithub } from "@tabler/icons-react";
 
 function App() {
   const [appState, setAppState] = React.useState<
@@ -61,6 +62,18 @@ function App() {
             <Text size="xl" fw={700}>
               {"Shotty 🎥"}
             </Text>
+
+            <ActionIcon
+              variant="transparent"
+              color="gray"
+              mx="md"
+              aria-label="Github"
+              component="a"
+              href="https://github.com/n4ze3m/shotty"
+              target="_blank"
+            >
+              <IconBrandGithub size={24} />
+            </ActionIcon>
           </Group>
         </div>
       </AppShell.Header>
