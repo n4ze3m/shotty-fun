@@ -1,6 +1,4 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { urlToText } from "../../utils/html.js";
-import { generateVideoScript } from "../../utils/ai.js";
 
 interface GenerateRequestBody {
   Body: {
@@ -18,19 +16,12 @@ export const generateVideo = async (
     const { content, platform, type } = request.body;
     const prisma = request.server.prisma;
 
-    let text = "";
-
-    if (type === "url") {
-      text = await urlToText(content);
-    } else {
-      text = content;
-    }
-    const script = await generateVideoScript(text, platform);
+  
 
     const process = await prisma.video.create({
       data: {
         website: content,
-        script: script,
+        script: "",
         platform,
         type,
       },

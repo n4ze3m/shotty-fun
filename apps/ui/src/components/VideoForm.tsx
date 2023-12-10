@@ -129,12 +129,6 @@ export const VideoForm: React.FC<Props> = ({
             <Button loading={isPending} type="submit" fullWidth color="teal">
               Generate
             </Button>
-            <Text size="xs" mt="md" c="dimmed" ta="center">
-              {"Like this project? "}
-              <a target="__blank" href="https://ko-fi.com/n4ze3m">
-                {"Buy me a coffee."}
-              </a>
-            </Text>
           </form>
         </Tabs.Panel>
 
@@ -169,16 +163,19 @@ export const VideoForm: React.FC<Props> = ({
             <Button loading={isPending} type="submit" fullWidth color="teal">
               Generate
             </Button>
-
-            <Text size="xs" mt="md" c="dimmed" ta="center">
-              {"Like this project? "}
-              <a target="__blank" href="https://ko-fi.com/n4ze3m">
-                {"Buy me a coffee."}
-              </a>
-            </Text>
           </form>
         </Tabs.Panel>
       </Tabs>
+      <Text size="xs" mt="md" c="dimmed" ta="center">
+        Application is slow because it's running on a cheap VPS. Please be
+        patient.
+      </Text>
+      <Text size="xs" mt="md" c="dimmed" ta="center">
+        {"Like this project? "}
+        <a target="__blank" href="https://ko-fi.com/n4ze3m">
+          {"Buy me a coffee."}
+        </a>
+      </Text>
     </>
   );
 };

@@ -6,6 +6,8 @@ import { dirname, join } from "path";
 import { renderMedia, selectComposition } from "@remotion/renderer";
 import { fileURLToPath } from "url";
 import { audioToTranscriptAPI } from "../utils/audio-to-text-api.js";
+import { urlToText } from "../utils/html.js";
+import { generateVideoScript } from "../utils/ai.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const prisma = new PrismaClient();
@@ -23,16 +25,26 @@ export default async function queueHandler(job: Job) {
       throw new Error("Process not found");
     }
 
+    let text = "";
+
+    if (process.type === "url") {
+      text = await urlToText(process.website);
+    } else {
+      text = process.script;
+    }
+    const script = await generateVideoScript(text, process.platform);
+
     await prisma.video.update({
       where: {
         id: job.data.id,
       },
       data: {
         status: "processing",
+        script,
       },
     });
 
-    const audio = (await textToSpeech(process.script)) as ArrayBuffer;
+    const audio = (await textToSpeech(script)) as ArrayBuffer;
 
     const mp3File = await prisma.file.create({
       data: {
@@ -76,6 +88,13 @@ export default async function queueHandler(job: Job) {
         enableMultiProcessOnLinux: true,
       },
     });
+
+    // delete all files
+    await prisma.file.deleteMany({
+      where: {
+        video_id: process.id,
+      }
+    })
 
     await prisma.video.update({
       where: {
