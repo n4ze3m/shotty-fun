@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY ./remotion/ .
 
+RUN npm install
+
 RUN npm run bundle
 
 FROM node:21-slim as server
