@@ -2,6 +2,8 @@ import { Button, Center, Text, Title } from "@mantine/core";
 import classes from "./VideoDone.module.css";
 import ReactPlayer from "react-player";
 import { IconDownload } from "@tabler/icons-react";
+import { useMutation } from "@tanstack/react-query";
+import { notifications } from "@mantine/notifications";
 
 type Props = {
   data: any;
@@ -23,6 +25,18 @@ export const VideoDone: React.FC<Props> = ({ data }) => {
     return `${baseURL}/file/${id}/video`;
   };
 
+  const { mutate: downloadVideoMutation, isPending: isDownloading } =
+    useMutation({
+      mutationFn: (data: string) => downloadVideo(data),
+      onError: (error: any) => {
+        notifications.show({
+          title: "Error",
+          message: error.message || "Something went wrong",
+          color: "red",
+        });
+      },
+    });
+
   return (
     <Center className={classes.main}>
       <Title mb="xl">{"Here is your generated video"}</Title>
@@ -39,8 +53,9 @@ export const VideoDone: React.FC<Props> = ({ data }) => {
 
       <Button
         color="teal"
-        onClick={() => downloadVideo(videoUrl(data.id))}
+        onClick={() => downloadVideoMutation(videoUrl(data.id))}
         leftSection={<IconDownload size={14} />}
+        loading={isDownloading}
         my="md"
       >
         Download Video
