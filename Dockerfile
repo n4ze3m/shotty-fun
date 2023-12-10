@@ -35,7 +35,7 @@ COPY --from=server /app/apps/ui/dist/ ./public
 # Copy Remotion
 COPY --from=video /app/dist/ ./video
 
-RUN yarn install --production  --frozen-lockfile
+RUN yarn install 
 
 ENV NODE_ENV=production
 
