@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Video {
+  id         String   @id @default(cuid())
+  website    String
+  status     String   @default("pending")
+  platform   String
+  script     String
+  type       String
+  assets     Json?
+  transcript Json?
+  credits    Json?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  files       File[]
+}
+
+model File {
+  id         String   @id @default(cuid())
+  type       String   @default("mp3")
+  encoding   Bytes
+  video_id   String
+  video      Video    @relation(fields: [video_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}

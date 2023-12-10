@@ -1,0 +1,39 @@
+
+.tab {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .form {
+    margin-top: var(--mantine-spacing-lg);
+  }
+  .card {
+    background-color: var(--mantine-color-body);
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.01);
+      box-shadow: var(--mantine-shadow-md);
+    }
+  }
+  
+  .display {
+    margin-top: var(--mantine-spacing-lg);
+    margin-bottom: var(--mantine-spacing-lg);
+  }
+  
+  .body {
+    display: flex;
+    /* mobild view make it row */
+    flex-direction: column;
+  
+    /* desktop view make it column */
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+    
+  }
