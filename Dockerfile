@@ -30,6 +30,8 @@ RUN apt-get install -y chromium
 # Copy API
 COPY --from=server /app/apps/api/package.json .
 COPY --from=server /app/apps/api/dist/ .
+COPY --from=server /app/apps/api/prisma/ .
+
 # Copy UI
 COPY --from=server /app/apps/ui/dist/ ./public
 # Copy Remotion
