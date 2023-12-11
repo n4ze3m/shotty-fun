@@ -102,7 +102,12 @@ function App() {
             <VideoProcessing videoStatus="fetching" />
           )}
           {appState === "done" && videoInfoStatus === "success" && (
-            <VideoDone data={videoInfo} />
+            <VideoDone
+              data={videoInfo}
+              setAppState={setAppState}
+              setVideId={setVideId}
+              setVideoStatus={setVideoStatus}
+            />
           )}
           {appState === "done" && videoInfoStatus === "error" && (
             <div>There was an error fetching your video. Please try again.</div>
