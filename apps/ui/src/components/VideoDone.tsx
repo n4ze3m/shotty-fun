@@ -1,4 +1,4 @@
-import { Button, Center, Text, Title } from "@mantine/core";
+import { Button, Center, Group, Text, Title } from "@mantine/core";
 import classes from "./VideoDone.module.css";
 import ReactPlayer from "react-player";
 import { IconDownload } from "@tabler/icons-react";
@@ -7,9 +7,17 @@ import { notifications } from "@mantine/notifications";
 
 type Props = {
   data: any;
+  setAppState: (value: "form" | "loading" | "done") => void;
+  setVideId: (val: ((prevState: null) => null) | null) => void;
+  setVideoStatus: (val: ((prevState: null) => null) | null) => void;
 };
 
-export const VideoDone: React.FC<Props> = ({ data }) => {
+export const VideoDone: React.FC<Props> = ({
+  data,
+  setAppState,
+  setVideId,
+  setVideoStatus,
+}) => {
   const downloadVideo = async (url: string) => {
     const response = await fetch(url);
     const blob = await response.blob();
@@ -43,24 +51,37 @@ export const VideoDone: React.FC<Props> = ({ data }) => {
       <ReactPlayer
         url={videoUrl(data.id)}
         controls
-        // width="100%"
-        // height="100%"
         style={{
           maxWidth: "100%",
           maxHeight: "100%",
         }}
       />
 
-      <Button
-        color="teal"
-        onClick={() => downloadVideoMutation(videoUrl(data.id))}
-        leftSection={<IconDownload size={14} />}
-        loading={isDownloading}
-        my="md"
-      >
-        Download Video
-      </Button>
+      <Group>
+        <Button
+          color="teal"
+          onClick={() => downloadVideoMutation(videoUrl(data.id))}
+          leftSection={<IconDownload size={14} />}
+          loading={isDownloading}
+          my="md"
+        >
+          Download Video
+        </Button>
 
+        <Button
+          ml="md"
+          color="blue"
+          variant="outline"
+          onClick={() => {
+            setAppState("form");
+            setVideId(null);
+            setVideoStatus(null);
+          }}
+          my="md"
+        >
+          Create another video
+        </Button>
+      </Group>
       <Text size="xs" c="dimmed" ta="center">
         {"The generated video content is sourced from "}
         <a target="__blank" href="https://www.pexels.com/">
