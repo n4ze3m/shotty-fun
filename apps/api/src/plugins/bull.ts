@@ -14,7 +14,7 @@ declare module "fastify" {
 }
 
 const bullPlugin: FastifyPluginAsync = fp(async (server, options) => {
-  const queueName = "shortyy";
+  const queueName = process.env.QUEUE_NAME || "shortyy";
 
 
   const worker = await startWorker();

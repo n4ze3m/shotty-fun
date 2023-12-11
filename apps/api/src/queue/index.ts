@@ -1,6 +1,6 @@
 import { Job } from "bullmq";
 import { PrismaClient } from "@prisma/client";
-import { textToSpeech } from "../utils/voice.js";
+import { textToSpeech, ttsSelfHosted } from "../utils/voice.js";
 import { splitTextByTimestamp } from "../utils/video.js";
 import { dirname, join } from "path";
 import { renderMedia, selectComposition } from "@remotion/renderer";
@@ -8,9 +8,11 @@ import { fileURLToPath } from "url";
 import { audioToTranscriptAPI } from "../utils/audio-to-text-api.js";
 import { urlToText } from "../utils/html.js";
 import { generateVideoScript } from "../utils/ai.js";
+import { convertWaveToMp3VolumeBoostFromBuffer } from "../utils/ffmpeg.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const prisma = new PrismaClient();
+const USE_TTS = process.env.USE_TTS === "true";
 export default async function queueHandler(job: Job) {
   console.log("Processing queue");
   await prisma.$connect();
@@ -44,7 +46,14 @@ export default async function queueHandler(job: Job) {
       },
     });
 
-    const audio = (await textToSpeech(script)) as ArrayBuffer;
+    let audio: any;
+
+    if (USE_TTS) {
+      audio = (await ttsSelfHosted(script)) as ArrayBuffer;
+      audio = await convertWaveToMp3VolumeBoostFromBuffer(Buffer.from(audio));
+    } else {
+      audio = (await textToSpeech(script)) as ArrayBuffer;
+    }
 
     const mp3File = await prisma.file.create({
       data: {
@@ -93,8 +102,8 @@ export default async function queueHandler(job: Job) {
     await prisma.file.deleteMany({
       where: {
         video_id: process.id,
-      }
-    })
+      },
+    });
 
     await prisma.video.update({
       where: {

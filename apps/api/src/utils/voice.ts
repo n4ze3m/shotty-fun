@@ -18,3 +18,17 @@ export const textToSpeech = async (text: string) => {
 
   return response.data;
 };
+
+export const ttsSelfHosted = async (text: string) => {
+  const response = await axios.post(
+    process.env.TTS_URL!,
+    {
+      text: text,
+    },
+    {
+      responseType: "arraybuffer",
+    }
+  );
+
+  return response.data;
+};

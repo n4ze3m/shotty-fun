@@ -32,5 +32,5 @@ Shotty let you generate video from given URL or text. It uses OpenAI, Fireworks,
 
 
 - [X] Use Local Whisper model
-- [] Use Local TTS
-- [] Use Local llm
+- [ ] Use Local TTS
+- [ ] Use Local llm

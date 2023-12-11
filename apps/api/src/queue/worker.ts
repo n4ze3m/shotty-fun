@@ -14,14 +14,14 @@ const __dirname = dirname(__filename);
 export const startWorker = async () => {
   // check if windows
   if (os.platform() === "win32") {
-    const worker = new Worker("shortyy", queueHandler, {
+    const worker = new Worker(process.env.QUEUE_NAME || "shortyy", queueHandler, {
       connection,
     });
 
     return worker;
   } else {
     const path = join(__dirname, "./index.js");
-    const worker = new Worker("shortyy", path, {
+    const worker = new Worker(process.env.QUEUE_NAME || "shortyy", path, {
       connection,
     });
 

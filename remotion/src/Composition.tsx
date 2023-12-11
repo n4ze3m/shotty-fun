@@ -82,7 +82,7 @@ export const RedditTiktokTest: React.FC<RedditTiktokTestProps> = ({
 					/>
 				)}
 			</AbsoluteFill>
-			{audioUrl ? <Audio src={audioUrl} /> : null}
+			{audioUrl ? <Audio src={audioUrl} volume={1} /> : null}
 		</>
 	);
 };
