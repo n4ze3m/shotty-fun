@@ -30,7 +30,7 @@ export default async function queueHandler(job: Job) {
     if (process.type === "url") {
       text = await urlToText(process.website);
     } else {
-      text = process.script;
+      text = process.website;
     }
     const script = await generateVideoScript(text, process.platform);
 

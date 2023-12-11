@@ -11,6 +11,7 @@ const PROMPT = `Your task is to summarize the following context from a website a
 - Only return the script do not return any other information
 - Only return text do not return any other information
 - Only return max 2 sentences and make it causal and coherent
+- Do not break the character.
 
 Context: 
 
